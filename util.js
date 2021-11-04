@@ -32,7 +32,7 @@ const slotToSeconds = (slot) => {
   const amORpm = slot.substr(-2, 2)
   let hour = parseInt(slot.slice(0, indexOfPeriod))
   if (amORpm == "pm") {hour = hour + 12}
-  const minute = slot.slice(indexOfPeriod + 1, indexOfPeriod + 3)
+  const minute = parseInt(slot.slice(indexOfPeriod + 1, indexOfPeriod + 3))
   const result = hour * 3600 + minute * 60
   return result
 }

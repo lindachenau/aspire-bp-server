@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "csv-writer": "^1.6.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",

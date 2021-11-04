@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const https = require('https');
 const { getAppointments } = require("./get-appointments");
 const { addAppointment } = require("./add-appointment");
 const { cancelAppointment } = require("./cancel-appointment");
@@ -12,15 +14,15 @@ const { getNumVisits } = require('./get-visitcount')
 const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientContacts, updatePatientAddress, updatePatientEmail } = require('./patient-info')
 
 const app = express();
-app.use(require("body-parser").json());
 app.use(express.json())
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "OPTIONS, POST, GET");
   next();
 }); 
-
+ 
 app.post('/get-appointments', async (req, res) => {
   try {
     const result = await getAppointments(req);
@@ -200,7 +202,10 @@ app.post('/update-email', async (req, res) => {
 });
 
 /*--------------------Routing Over----------------------------*/
-const port = process.env.PORT || 5000
-app.listen(port, () => {
-    console.log(`Express Started on Port ${port}`);
+https.createServer({
+  key: fs.readFileSync('STAR_aspiremedicalcentre_com_au.key'),
+  cert: fs.readFileSync('STAR_aspiremedicalcentre_com_au.crt')
+}, app)
+.listen(5000, function () {
+  console.log('Express started on port 5000')
 });
