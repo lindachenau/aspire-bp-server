@@ -7,9 +7,9 @@ const bpConfig = {
   server: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT),
   pool: {
-    max: 10,
+    max: 15,
     min: 0,
-    idleTimeoutMillis: 10
+    idleTimeoutMillis: 10000
   },
   options: {
     cryptoCredentialsDetails: {
