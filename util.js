@@ -37,9 +37,30 @@ const slotToSeconds = (slot) => {
   return result
 }
 
+const slotToMinutes = (slot) => {
+  const indexOfPeriod = slot.indexOf(":")
+  const amORpm = slot.substr(-2, 2)
+  let hour = parseInt(slot.slice(0, indexOfPeriod))
+  if (amORpm == "pm") {hour = hour + 12}
+  const minute = slot.slice(indexOfPeriod + 1, indexOfPeriod + 3)
+  const result = hour * 60 + parseInt(minute)
+  return result
+}
+
+const localDate = (aptDate, slot) => {
+  const minutes = slotToMinutes(slot)
+  const y = aptDate.slice(0, 4)
+  const mon = aptDate.slice(5, 7) - 1 // Jan is 0
+  const d = aptDate.slice(8)
+  const h = Math.floor(minutes / 60)
+  const min = minutes % 60
+  return new Date(y, mon, d, h, min)
+}
+
 module.exports = {
   runStoredProcedure,
   aptTimeString,
   aptsToStrings,
-  slotToSeconds
+  slotToSeconds,
+  localDate
 }

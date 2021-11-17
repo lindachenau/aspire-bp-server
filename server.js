@@ -12,6 +12,7 @@ const { getPatientAppointments } = require("./get-patientapts");
 const { getUserBookedApts } = require("./get-userbookedapts");
 const { getNumVisits } = require('./get-visitcount')
 const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientContacts, updatePatientAddress, updatePatientEmail } = require('./patient-info')
+const { localDate } = require("./util")
 
 const app = express();
 app.use(express.json())
@@ -66,6 +67,12 @@ app.post('/add-message', async (req, res) => {
   }
 });
 
+/*
+ * Check if the requested slot is still available first and then check incomplete bookings. Return
+ * 0: The slot has been taken
+ * -1: A booking exists on the same day
+ * -2: Booking request is blocked because the patient has failed attendances >= 3
+ */
 app.post('/add-appointment', async (req, res) => {
   try {
     const { aptDate, aptTime, aptType, practitionerID, patientID } = req.body
@@ -78,8 +85,22 @@ app.post('/add-appointment', async (req, res) => {
       // Check if patient has booked an appointment on the day already
       const result = await getPatientAppointments(patientID);
       const booked = result.filter((apt) => apt.aptDate === aptDate)
+
+      // Check past failed bookings
+      // Today at 0:0 am
+      let today = new Date()
+      today.setHours(0, 0, 0)
+      const history = result.filter(apt => {
+        const slot = localDate(apt.aptDate, apt.aptTime)
+        return (slot <= today) ? apt : null
+      })            
+
       if (booked.length > 0) {
+        console.log("The patient has booked an appointment on the requested date.")
         res.status(200).json(-1);
+      } else if (history.length >= 3) {
+        console.log("The patient has failed to attend appointments 3 times")
+        res.status(200).json(-2);
       } else {
         const result = await addAppointment(aptDate, aptTime, aptType, practitionerID, patientID);
         res.status(200).json(result);
