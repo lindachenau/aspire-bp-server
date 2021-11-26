@@ -76,7 +76,7 @@ app.post('/add-message', async (req, res) => {
 app.post('/add-appointment', async (req, res) => {
   try {
     const { aptDate, aptTime, aptType, practitionerID, patientID } = req.body
-    const booked = isAppointmentBooked(practitionerID, aptDate, aptTime)
+    const booked = await isAppointmentBooked(practitionerID, aptDate, aptTime)
     // Check if the slot is taken already
     if (booked) {
       console.log("Slot taken")
