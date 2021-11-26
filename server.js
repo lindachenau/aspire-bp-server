@@ -9,7 +9,7 @@ const { addPatient } = require("./add-patient");
 const { getPatient } = require("./get-patient");
 const { addMessage } = require("./add-message");
 const { getPatientAppointments } = require("./get-patientapts");
-const { getUserBookedApts } = require("./get-userbookedapts");
+const { isAppointmentBooked } = require("./isAppointmentBooked");
 const { getNumVisits } = require('./get-visitcount')
 const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientContacts, updatePatientAddress, updatePatientEmail } = require('./patient-info')
 const { localDate } = require("./util")
@@ -76,9 +76,9 @@ app.post('/add-message', async (req, res) => {
 app.post('/add-appointment', async (req, res) => {
   try {
     const { aptDate, aptTime, aptType, practitionerID, patientID } = req.body
-    const bookedApts = await getUserBookedApts(practitionerID, aptDate);
+    const booked = isAppointmentBooked(practitionerID, aptDate, aptTime)
     // Check if the slot is taken already
-    if (bookedApts.includes(aptTime)) {
+    if (booked) {
       console.log("Slot taken")
       res.status(200).json(0);
     } else {
