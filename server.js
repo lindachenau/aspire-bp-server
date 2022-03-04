@@ -224,9 +224,9 @@ app.post('/update-email', async (req, res) => {
   }
 });
 
-app.get('/appointment-status', async (req, res) => {
+app.post('/appointment-status', async (req, res) => {
   try {
-    const { id } = req.query
+    const { id } = req.body
     const result = await appointmentStatus(id);
     res.status(200).json(result);
   } catch (err) {
