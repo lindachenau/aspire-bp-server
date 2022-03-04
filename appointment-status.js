@@ -9,10 +9,14 @@ const appointmentStatus = async (aptID) => {
   const pool = await sql.connect(bpConfig)
   const result = await runStoredProcedure(pool, 'BP_GetAppointmentDetails', params)
 
-  return result
+  return result.recordset[0]
 }
 
-(async () => {
-  const result = await appointmentStatus(6)
-  console.log(result)
-})()
+// (async () => {
+//   const result = await appointmentStatus(79)
+//   console.log(result)
+// })()
+
+module.exports = {
+  appointmentStatus
+}

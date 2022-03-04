@@ -13,6 +13,7 @@ const { isAppointmentBooked } = require("./isAppointmentBooked");
 const { getNumVisits } = require('./get-visitcount')
 const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientContacts, updatePatientAddress, updatePatientEmail } = require('./patient-info')
 const { localDate } = require("./util")
+const { appointmentStatus } = require('./appointment-status')
 const { contactByPhone }= require('./contact-lookup')
 
 const app = express();
@@ -216,6 +217,17 @@ app.post('/update-email', async (req, res) => {
   try {
     const { patientID, email } = req.body
     const result = await updatePatientEmail(patientID, email);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: err});
+  }
+});
+
+app.get('/appointment-status', async (req, res) => {
+  try {
+    const { id } = req.query
+    const result = await appointmentStatus(id);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
