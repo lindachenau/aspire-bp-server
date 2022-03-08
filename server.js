@@ -15,6 +15,7 @@ const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePati
 const { localDate } = require("./util")
 const { appointmentStatus } = require('./appointment-status')
 const { confirmAppointment } = require('./appointment-attendance')
+const { getAppointmentsOnDate } = require('./get-appointments-on-date')
 const { contactByPhone }= require('./contact-lookup')
 
 const app = express();
@@ -239,7 +240,18 @@ app.post('/appointment-status', async (req, res) => {
 app.post('/confirm-appointment', async (req, res) => {
   try {
     const { id } = req.body
-    const result = await appointmentStatus(id);
+    const result = await confirmAppointment(id);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: err});
+  }
+});
+
+app.post('/appointments-ondate', async (req, res) => {
+  try {
+    const { date } = req.body
+    const result = await getAppointmentsOnDate(date);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
