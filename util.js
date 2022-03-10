@@ -41,7 +41,8 @@ const slotToMinutes = (slot) => {
   const indexOfPeriod = slot.indexOf(":")
   const amORpm = slot.substr(-2, 2)
   let hour = parseInt(slot.slice(0, indexOfPeriod))
-  if (amORpm == "pm" && hour < 12) {hour = hour + 12}
+  if (hour === 12) hour = 0
+  if (amORpm == "pm") {hour = hour + 12}
   const minute = slot.slice(indexOfPeriod + 1, indexOfPeriod + 3)
   const result = hour * 60 + parseInt(minute)
   return result
