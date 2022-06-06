@@ -11,7 +11,7 @@ const { addMessage } = require("./add-message");
 const { getPatientAppointments } = require("./get-patientapts");
 const { isAppointmentBooked } = require("./isAppointmentBooked");
 const { getNumVisits } = require('./get-visitcount')
-const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientContacts, updatePatientAddress, updatePatientEmail } = require('./patient-info')
+const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientContacts, updatePatientAddress, updatePatientEmail, setEmergencyContact } = require('./patient-info')
 const { localDate } = require("./util")
 const { appointmentStatus } = require('./appointment-status')
 const { confirmAppointment } = require('./appointment-attendance')
@@ -263,6 +263,17 @@ app.get('/contacts', async (req, res) => {
   try {
     const { phone } = req.query
     const result = await contactByPhone(phone);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: err});
+  }
+});
+
+app.post('/set-emergency-contact', async (req, res) => {
+  try {
+    const { patientID, firstname, surname, contactPhone, relationship } = req.body
+    const result = await setEmergencyContact(patientID, firstname, surname, contactPhone, relationship);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);

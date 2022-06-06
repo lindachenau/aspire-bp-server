@@ -95,10 +95,24 @@ const updatePatientEmail = async (patientID, email) => {
   return result.returnValue
 }
 
-(async () => {
-  const result = await getPatientInfo(1)
-  console.log(result)
-})()
+const setEmergencyContact = async (patientID, firstname, surname, contactPhone, relationship) => {
+
+  const params = [{ "name": "InternalId", "type": sql.Int, "value": patientID },
+    { "name": "Firstname", "type": sql.VarChar, "value": firstname },
+    { "name": "Surname", "type": sql.VarChar, "value": surname },
+    { "name": "ContactPhone", "type": sql.VarChar, "value": contactPhone },
+    { "name": "Relationship", "type": sql.VarChar, "value": relationship }];
+  
+  const pool = await sql.connect(bpConfig)
+  const result = await runStoredProcedure(pool, 'BP_SetEmergencyContact', params)
+
+  return result.returnValue
+}
+
+// (async () => {
+//   const result = await getPatientInfo(1)
+//   console.log(result)
+// })()
 
 // (async () => {
 //   const result = await updatePatientMedicare(46954, "1234567890", "1", "11/2024")
@@ -111,5 +125,6 @@ module.exports = {
   updatePatientPension,
   updatePatientContacts,
   updatePatientAddress,
-  updatePatientEmail
+  updatePatientEmail,
+  setEmergencyContact
 }
