@@ -40,8 +40,10 @@ app.post('/get-appointments', async (req, res) => {
 
 app.post('/add-patient', async (req, res) => {
   try {
-    const { titleCode, firstname, surname, dob, sexCode } = req.body
-    const result = await addPatient(titleCode, firstname, surname, dob, sexCode);
+    const { titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry } = req.body
+    const result = await addPatient(titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
@@ -274,6 +276,19 @@ app.post('/set-emergency-contact', async (req, res) => {
   try {
     const { patientID, firstname, surname, contactPhone, relationship } = req.body
     const result = await setEmergencyContact(patientID, firstname, surname, contactPhone, relationship);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: err});
+  }
+});
+
+app.post('/update-patient', async (req, res) => {
+  try {
+    const { patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry } = req.body
+    const result = await updatePatient(patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
