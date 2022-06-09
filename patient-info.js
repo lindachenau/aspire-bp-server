@@ -116,7 +116,7 @@ const setEmergencyContact = async (patientID, firstname, surname, contactPhone, 
 
 const updateHealthFund = async (patientID, healthFundNo, healthFundName, healthFundExpiry) => {
 
-  const params = [{ "name": "InternalId", "type": sql.Int, "value": patientID },
+  const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID },
   { "name": "HealthfundNo", "type": sql.VarChar, "value": healthFundNo },
   { "name": "HealthFundName", "type": sql.VarChar, "value": healthFundName },
   { "name": "HealthFundID", "type": sql.Int, "value": 0 },
