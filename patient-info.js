@@ -114,6 +114,20 @@ const setEmergencyContact = async (patientID, firstname, surname, contactPhone, 
   return result.returnValue
 }
 
+const updateHealthFund = async (patientID, healthFundNo, healthFundName, healthFundExpiry) => {
+
+  const params = [{ "name": "InternalId", "type": sql.Int, "value": patientID },
+  { "name": "HealthfundNo", "type": sql.VarChar, "value": healthFundNo },
+  { "name": "HealthFundName", "type": sql.VarChar, "value": healthFundName },
+  { "name": "HealthFundID", "type": sql.Int, "value": 0 },
+  { "name": "HealthFundExpiry", "type": sql.Date, "value": healthFundExpiry }];
+  
+  const pool = await sql.connect(bpConfig)
+  const result = await runStoredProcedure(pool, 'BP_UpdatePatientHealthFund', params)
+
+  return result.returnValue
+}
+
 const updatePatient = async (patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
   email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry) => {
 
@@ -170,5 +184,7 @@ module.exports = {
   updatePatientContacts,
   updatePatientAddress,
   updatePatientEmail,
-  setEmergencyContact
+  setEmergencyContact,
+  updateHealthFund,
+  updatePatient
 }
