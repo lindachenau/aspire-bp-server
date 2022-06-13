@@ -57,6 +57,18 @@ const updatePatientPension = async (patientID, pensionCode, pensionNo, pensionEx
   return result.returnValue
 }
 
+const updatePatientDVA = async (patientID, dVACode, dVANo) => {
+
+  const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID },
+    { "name": "DVACode", "type": sql.Int, "value": dVACode },
+    { "name": "DVANo", "type": sql.VarChar, "value": dVANo }];
+  
+  const pool = await sql.connect(bpConfig)
+  const result = await runStoredProcedure(pool, 'BP_UpdatePatientDVA', params)
+  
+  return result.returnValue
+}
+
 const updatePatientContacts = async (patientID, homePhone, workPhone, mobilePhone) => {
 
   const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID },
@@ -181,6 +193,7 @@ module.exports = {
   getPatientInfo,
   updatePatientMedicare,
   updatePatientPension,
+  updatePatientDVA,
   updatePatientContacts,
   updatePatientAddress,
   updatePatientEmail,
