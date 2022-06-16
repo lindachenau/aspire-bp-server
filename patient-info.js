@@ -27,7 +27,7 @@ const getPatientInfo = async (patientID) => {
     city: City?.trim(), 
     postcode: Postcode?.trim(), 
     email: Email?.trim(),
-    dVACode: DVACode?.trim(),
+    dVACode: DVACode,
     dVANo: DVANo?.trim()
   }
 }
@@ -183,7 +183,7 @@ const updatePatient = async (patientID, titleCode, firstname, surname, dob, sexC
 }
 
 // (async () => {
-//   const result = await getPatientInfo(1)
+//   const result = await getPatientInfo(27)
 //   console.log(result)
 // })()
 
