@@ -10,7 +10,7 @@ const getPatientInfo = async (patientID) => {
   const result = await runStoredProcedure(pool, 'BP_GetPatientByInternalID', params)
   const record = result.recordset[0]
   const {InternalID, MedicareNo, MedicareLineNo, MedicareExpiry, PensionCode, PensionNo, PensionExpiry, 
-    HomePhone, WorkPhone, MobilePhone, Address1, City, Postcode, Email} = record
+    HomePhone, WorkPhone, MobilePhone, Address1, City, Postcode, Email, DVACode, DVANo} = record
     
   return {
     patientID: InternalID, 
@@ -26,7 +26,9 @@ const getPatientInfo = async (patientID) => {
     address1: Address1?.trim(), 
     city: City?.trim(), 
     postcode: Postcode?.trim(), 
-    email: Email?.trim()   
+    email: Email?.trim(),
+    dVACode: DVACode?.trim(),
+    dVANo: DVANo?.trim()
   }
 }
 
@@ -141,7 +143,8 @@ const updateHealthFund = async (patientID, healthFundNo, healthFundName, healthF
 }
 
 const updatePatient = async (patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
-  email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry) => {
+  email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
+  pensionCode, pensionNo, pensionExpiry, dVACode, dVANo) => {
 
   const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID },
     { "name": "TitleCode", "type": sql.Int, "value": titleCode },
@@ -167,8 +170,8 @@ const updatePatient = async (patientID, titleCode, firstname, surname, dob, sexC
     { "name": "PensionCode", "type": sql.Int, "value": pensionCode },
     { "name": "PensionNo", "type": sql.VarChar, "value": pensionNo },
     { "name": "PensionExpiry", "type": sql.Date, "value": pensionExpiry },
-    { "name": "DVACode", "type": sql.Int, "value": 0 },
-    { "name": "DVANo", "type": sql.VarChar, "value": "" },
+    { "name": "DVACode", "type": sql.Int, "value": dVACode },
+    { "name": "DVANo", "type": sql.VarChar, "value": dVANo },
     { "name": "RecordNo", "type": sql.VarChar, "value": "" },
     { "name": "ExternalID", "type": sql.VarChar, "value": "" },
     { "name": "Email", "type": sql.VarChar, "value": email }];

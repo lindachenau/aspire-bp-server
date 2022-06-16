@@ -309,9 +309,11 @@ app.post('/update-healthfund', async (req, res) => {
 app.post('/update-patient', async (req, res) => {
   try {
     const { patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
-      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry } = req.body
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
+      pensionCode, pensionNo, pensionExpiry, dVACode, dVANo } = req.body
     const result = await updatePatient(patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
-      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry);
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
+      pensionCode, pensionNo, pensionExpiry, dVACode, dVANo);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
