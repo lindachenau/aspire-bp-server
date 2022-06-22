@@ -37,7 +37,6 @@ const addPatient = async (titleCode, firstname, surname, dob, sexCode, address1,
     { "name": "EthnicCode", "type": sql.Int, "value": ethnicCode },
     { "name": "ConsentSMSReminder", "type": sql.Int, "value": 0 },
     { "name": "NextOfKinID", "type": sql.Int, "value": 0 },
-    { "name": "EmergencyContact", "type": sql.Int, "value": 0 },
     { "name": "GenderCode", "type": sql.Int, "value": 0 },
     { "name": "PronounCode", "type": sql.Int, "value": 0 }];
   
@@ -49,7 +48,7 @@ const addPatient = async (titleCode, firstname, surname, dob, sexCode, address1,
 }
 
 // (async () => {
-//   const result = await addPatient(0, "Sooty", "Yu", "1991-10-04", 1)
+//   const result = await addPatient(0, "Test14", "Patient", "1986-10-04", 1, "", "", "", "", "", "", "", "", "", "", 0, "", null, 1013)
 //   console.log(result)
 // })()
 
