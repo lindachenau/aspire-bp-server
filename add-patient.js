@@ -3,7 +3,7 @@ const { runStoredProcedure } = require("./util")
 const { bpConfig } = require("./bp-config")
 
 const addPatient = async (titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
-  email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry) => {
+  email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry, ethnicCode) => {
 
   const params = [{ "name": "TitleCode", "type": sql.Int, "value": titleCode },
     { "name": "Firstname", "type": sql.VarChar, "value": firstname },
@@ -32,7 +32,14 @@ const addPatient = async (titleCode, firstname, surname, dob, sexCode, address1,
     { "name": "DVANo", "type": sql.VarChar, "value": "" },
     { "name": "RecordNo", "type": sql.VarChar, "value": "" },
     { "name": "ExternalID", "type": sql.VarChar, "value": "" },
-    { "name": "Email", "type": sql.VarChar, "value": email }];
+    { "name": "Email", "type": sql.VarChar, "value": email },
+    { "name": "HeadOfFamilyID", "type": sql.Int, "value": 0 },
+    { "name": "EthnicCode", "type": sql.Int, "value": ethnicCode },
+    { "name": "ConsentSMSReminder", "type": sql.Int, "value": 0 },
+    { "name": "NextOfKinID", "type": sql.Int, "value": 0 },
+    { "name": "EmergencyContact", "type": sql.Int, "value": 0 },
+    { "name": "GenderCode", "type": sql.Int, "value": 0 },
+    { "name": "PronounCode", "type": sql.Int, "value": 0 }];
   
   const pool = await sql.connect(bpConfig)
   const result = await runStoredProcedure(pool, 'BP_AddPatient', params)

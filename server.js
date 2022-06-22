@@ -42,9 +42,9 @@ app.post('/get-appointments', async (req, res) => {
 app.post('/add-patient', async (req, res) => {
   try {
     const { titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
-      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry } = req.body
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry, ethnicCode } = req.body
     const result = await addPatient(titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
-      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry);
+      email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, pensionCode, pensionNo, pensionExpiry, ethnicCode);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
@@ -310,10 +310,10 @@ app.post('/update-patient', async (req, res) => {
   try {
     const { patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
       email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
-      pensionCode, pensionNo, pensionExpiry, dVACode, dVANo } = req.body
+      pensionCode, pensionNo, pensionExpiry, dVACode, dVANo, ethnicCode } = req.body
     const result = await updatePatient(patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
       email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
-      pensionCode, pensionNo, pensionExpiry, dVACode, dVANo);
+      pensionCode, pensionNo, pensionExpiry, dVACode, dVANo, ethnicCode);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);

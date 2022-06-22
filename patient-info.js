@@ -144,7 +144,7 @@ const updateHealthFund = async (patientID, healthFundNo, healthFundName, healthF
 
 const updatePatient = async (patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
   email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
-  pensionCode, pensionNo, pensionExpiry, dVACode, dVANo) => {
+  pensionCode, pensionNo, pensionExpiry, dVACode, dVANo, ethnicCode) => {
 
   const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID },
     { "name": "TitleCode", "type": sql.Int, "value": titleCode },
@@ -174,7 +174,14 @@ const updatePatient = async (patientID, titleCode, firstname, surname, dob, sexC
     { "name": "DVANo", "type": sql.VarChar, "value": dVANo },
     { "name": "RecordNo", "type": sql.VarChar, "value": "" },
     { "name": "ExternalID", "type": sql.VarChar, "value": "" },
-    { "name": "Email", "type": sql.VarChar, "value": email }];
+    { "name": "Email", "type": sql.VarChar, "value": email },
+    { "name": "HeadOfFamilyID", "type": sql.Int, "value": 0 },
+    { "name": "EthnicCode", "type": sql.Int, "value": ethnicCode },
+    { "name": "ConsentSMSReminder", "type": sql.Int, "value": 0 },
+    { "name": "NextOfKinID", "type": sql.Int, "value": 0 },
+    { "name": "EmergencyContact", "type": sql.Int, "value": 0 },
+    { "name": "GenderCode", "type": sql.Int, "value": 0 },
+    { "name": "PronounCode", "type": sql.Int, "value": 0 }];
   
   const pool = await sql.connect(bpConfig)
   const result = await runStoredProcedure(pool, 'BP_UpdatePatient', params)
