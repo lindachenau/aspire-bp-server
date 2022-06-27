@@ -9,11 +9,13 @@ const getPatientInfo = async (patientID) => {
   const pool = await sql.connect(bpConfig)
   const result = await runStoredProcedure(pool, 'BP_GetPatientByInternalID', params)
   const record = result.recordset[0]
-  const {InternalID, MedicareNo, MedicareLineNo, MedicareExpiry, PensionCode, PensionNo, PensionExpiry, 
+  const {InternalID, Firstname, Surname, MedicareNo, MedicareLineNo, MedicareExpiry, PensionCode, PensionNo, PensionExpiry, 
     HomePhone, WorkPhone, MobilePhone, Address1, City, Postcode, Email, DVACode, DVANo} = record
     
   return {
-    patientID: InternalID, 
+    patientID: InternalID,
+    firstname: Firstname.trim(),
+    surname: Surname.trim(),
     medicareNo: MedicareNo?.trim(), 
     medicareLineNo: MedicareLineNo?.trim(), 
     medicareExpiry: MedicareExpiry?.trim(), 
