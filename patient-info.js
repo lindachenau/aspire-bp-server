@@ -130,6 +130,25 @@ const setEmergencyContact = async (patientID, firstname, surname, contactPhone, 
   return result.returnValue
 }
 
+const setNextOfKin = async (patientID, firstname, surname, contactPhone, relationship) => {
+
+  const params = [{ "name": "InternalId", "type": sql.Int, "value": patientID },
+    { "name": "TitleCode", "type": sql.Int, "value": 0 },
+    { "name": "Surname", "type": sql.VarChar, "value": surname },
+    { "name": "Firstname", "type": sql.VarChar, "value": firstname },
+    { "name": "Address", "type": sql.VarChar, "value": "" },
+    { "name": "City", "type": sql.VarChar, "value": "" },
+    { "name": "Postcode", "type": sql.VarChar, "value": "" },
+    { "name": "ContactPhone", "type": sql.VarChar, "value": contactPhone },
+    { "name": "Relationship", "type": sql.VarChar, "value": relationship },
+    { "name": "ContactPhone2", "type": sql.VarChar, "value": "" }];
+  
+  const pool = await sql.connect(bpConfig)
+  const result = await runStoredProcedure(pool, 'BP_SetNextOfKin', params)
+
+  return result.returnValue
+}
+
 const updateHealthFund = async (patientID, healthFundNo, healthFundName, healthFundExpiry) => {
 
   const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID },
@@ -210,6 +229,7 @@ module.exports = {
   updatePatientAddress,
   updatePatientEmail,
   setEmergencyContact,
+  setNextOfKin,
   updateHealthFund,
   updatePatient
 }
