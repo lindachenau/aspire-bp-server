@@ -82,7 +82,7 @@ app.post('/add-message', async (req, res) => {
  */
 app.post('/add-appointment', async (req, res) => {
   try {
-    const { aptDate, aptTime, aptType, practitionerID, patientID } = req.body
+    const { aptDate, aptTime, aptDuration, aptType, practitionerID, patientID } = req.body
     const booked = await isAppointmentBooked(practitionerID, aptDate, aptTime)
     // Check if the slot is taken already
     if (booked) {
@@ -109,7 +109,7 @@ app.post('/add-appointment', async (req, res) => {
         console.log("The patient has failed to attend appointments 3 times")
         res.status(200).json(-2);
       } else {
-        const result = await addAppointment(aptDate, aptTime, aptType, practitionerID, patientID);
+        const result = await addAppointment(aptDate, aptTime, aptDuration, aptType, practitionerID, patientID);
         res.status(200).json(result);
       }
     }
