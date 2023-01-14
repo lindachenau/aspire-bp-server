@@ -13,7 +13,8 @@ const addAppointment = async (aptDate, aptTime, aptDuration, aptType, practition
     { "name": "AptLen", "type": sql.Int, "value": doubleLength ? aptDuration * 60 * 2: aptDuration * 60},
     { "name": "PractitionerID", "type": sql.Int, "value": practitionerID },
     { "name": "PatientID", "type": sql.Int, "value": patientID },
-    { "name": "Reason", "type": sql.VarChar, "value": "" }];
+    { "name": "Reason", "type": sql.VarChar, "value": "" },
+    { "name": "LocationID", "type": sql.Int, "value": 1 }];
   
   const pool = await sql.connect(bpConfig)
   const result = await runStoredProcedure(pool, 'BP_AddAppointmentEx', params)
