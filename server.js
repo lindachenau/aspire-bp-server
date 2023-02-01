@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const https = require('https');
+const { newPatientAptType, longApptType } = require("./bp-config")
 const { getAppointments } = require("./get-appointments");
 const { addAppointment } = require("./add-appointment");
 const { cancelAppointment } = require("./cancel-appointment");
@@ -9,7 +10,7 @@ const { addPatient } = require("./add-patient");
 const { getPatient } = require("./get-patient");
 const { addMessage } = require("./add-message");
 const { getPatientAppointments } = require("./get-patientapts");
-const { isAppointmentBooked } = require("./isAppointmentBooked");
+const { isAppointmentBooked, isLongAppointmentBooked } = require("./isAppointmentBooked");
 const { getNumVisits } = require('./get-visitcount')
 const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientDVA, updatePatientContacts, updatePatientAddress, 
   updatePatientEmail, setEmergencyContact, setNextOfKin, updateHealthFund, updatePatient } = require('./patient-info')
@@ -109,8 +110,20 @@ app.post('/add-appointment', async (req, res) => {
         console.log("The patient has failed to attend appointments 3 times")
         res.status(200).json(-2);
       } else {
-        const result = await addAppointment(aptDate, aptTime, aptDuration, aptType, practitionerID, patientID);
-        res.status(200).json(result);
+        const doubleLength = aptType == newPatientAptType || aptType == longApptType
+        let booked2 = false
+        if (doubleLength) {
+          //Check the 2nd slot is still free
+          booked2 = await isLongAppointmentBooked(practitionerID, aptDate, aptTime, aptDuration)
+        }
+
+        if (booked2) {
+          console.log("2nd slot taken")
+          res.status(200).json(-3);          
+        } else {
+          const result = await addAppointment(aptDate, aptTime, aptDuration, aptType, practitionerID, patientID);
+          res.status(200).json(result);
+        }
       }
     }
   } catch (err) {

@@ -1,8 +1,6 @@
 const sql = require('mssql');
 const { runStoredProcedure, slotToSeconds } = require("./util")
-const { bpConfig } = require("./bp-config")
-const newPatientAptType = 4
-const longApptType = 2
+const { bpConfig, newPatientAptType, longApptType } = require("./bp-config")
 
 const addAppointment = async (aptDate, aptTime, aptDuration, aptType, practitionerID, patientID) => {
   const doubleLength = aptType == newPatientAptType || aptType == longApptType

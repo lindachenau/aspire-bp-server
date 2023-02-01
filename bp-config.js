@@ -18,6 +18,11 @@ const bpConfig = {
   }
 }
 
+const newPatientAptType = 4
+const longApptType = 2
+
 module.exports = {
-  bpConfig
+  bpConfig,
+  newPatientAptType,
+  longApptType
 }
