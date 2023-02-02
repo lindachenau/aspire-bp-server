@@ -16,7 +16,8 @@ const isAppointmentBooked = async (userID, aptDate, aptTime) => {
 
 const isLongAppointmentBooked = async (userID, aptDate, aptTime, aptDuration) => {
   const slot1 = slotToSeconds(aptTime)
-  const slot2 = slot1 + aptDuration * 30 //Half of duration (mins) in seconds
+  //aptDuration is session length regardless of appointment type
+  const slot2 = slot1 + aptDuration * 60 
 
   const params = [{ "name": "UserID", "type": sql.Int, "value": userID }, 
     { "name": "AptDate", "type": sql.Date, "value": aptDate },
