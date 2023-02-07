@@ -1,30 +1,29 @@
 const sql = require('mssql');
 const moment = require('moment')
 const { runStoredProcedure, aptTimeString } = require("./util")
-const { bpConfig } = require("./bp-config")
+const { bpConfig, apptRecordBooked, apptStatusBooked, apptStatusDNA, userIDs } = require("./bp-config")
 
 const getPatientAppointments = async (patientID) => {
-
-  const params = [{ "name": "PatientID", "type": sql.Int, "value": patientID }];
-  
   const pool = await sql.connect(bpConfig)
-  const result = await runStoredProcedure(pool, 'BP_GetPatientAppointments', params)
 
-  const apts = result.recordset.map(item => {
-    return {
-      aptID: item.RecordID,
-      status: item.AppointmentCode,
-      provider: `${item.UserTitle.trim()} ${item.UserSurname.trim()}`,
-      aptDate: moment(item.AppointmentDate).format("YYYY-MM-DD"),
-      aptTime: aptTimeString(item.AppointmentTime),
-      aptType: item.AppointmentType
-    }}) 
+  const result = await pool.request()
+    .query(`SELECT RECORDID, RECORDSTATUS, APPOINTMENTCODE, USERID, APPOINTMENTDATE, APPOINTMENTTIME from APPOINTMENTS where INTERNALID = ${patientID} 
+      AND RECORDSTATUS = ${apptRecordBooked} AND (APPOINTMENTCODE = ${apptStatusBooked} OR APPOINTMENTCODE = ${apptStatusDNA})`)
 
+    const apts = result.recordset.map(item => {
+      return {
+        aptID: item.RECORDID,
+        status: item.APPOINTMENTCODE,
+        provider: userIDs[item.USERID],
+        aptDate: moment(item.APPOINTMENTDATE).format("YYYY-MM-DD"),
+        aptTime: aptTimeString(item.APPOINTMENTTIME)
+      }}) 
+  
   return apts
 }
 
 // (async () => {
-//   const result = await getPatientAppointments(25036)
+//   const result = await getPatientAppointments(1)
 //   console.log(result)
 // })()
 

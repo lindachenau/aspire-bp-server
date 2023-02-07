@@ -20,9 +20,22 @@ const bpConfig = {
 
 const newPatientAptType = 4
 const longApptType = 2
+const apptRecordBooked = 1
+const apptStatusBooked = 1
+const apptStatusDNA = 10
+
+const userIDs = {
+  "1" : "Vaccination Clinic",
+  "2000000570": "Kai Yu",
+  "5" : "Lina Wee"
+}
 
 module.exports = {
   bpConfig,
   newPatientAptType,
-  longApptType
+  longApptType,
+  apptRecordBooked,
+  apptStatusBooked,
+  apptStatusDNA,
+  userIDs
 }
