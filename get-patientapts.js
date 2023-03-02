@@ -7,7 +7,7 @@ const getPatientAppointments = async (patientID) => {
   const pool = await sql.connect(bpConfig)
 
   const result = await pool.request()
-    .query(`SELECT RECORDID, RECORDSTATUS, APPOINTMENTCODE, USERID, APPOINTMENTDATE, APPOINTMENTTIME from APPOINTMENTS where INTERNALID = ${patientID} 
+    .query(`SELECT RECORDID, RECORDSTATUS, APPOINTMENTCODE, USERID, APPOINTMENTTYPE, APPOINTMENTDATE, APPOINTMENTTIME from APPOINTMENTS where INTERNALID = ${patientID} 
       AND RECORDSTATUS = ${apptRecordBooked} AND (APPOINTMENTCODE = ${apptStatusBooked} OR APPOINTMENTCODE = ${apptStatusDNA})`)
 
     const apts = result.recordset.map(item => {
@@ -15,6 +15,7 @@ const getPatientAppointments = async (patientID) => {
         aptID: item.RECORDID,
         status: item.APPOINTMENTCODE,
         provider: userIDs[item.USERID],
+        aptType: item.APPOINTMENTTYPE,
         aptDate: moment(item.APPOINTMENTDATE).format("YYYY-MM-DD"),
         aptTime: aptTimeString(item.APPOINTMENTTIME)
       }}) 
