@@ -1,5 +1,4 @@
 const sql = require('mssql');
-const moment = require('moment')
 const { bpConfig } = require("./bp-config")
 
 const getAppointmentsOnDate = async (date) => {

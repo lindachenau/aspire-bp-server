@@ -11,7 +11,8 @@ const { getPatient } = require("./get-patient");
 const { addMessage } = require("./add-message");
 const { getPatientAppointments } = require("./get-patientapts");
 const { isAppointmentBooked, isLongAppointmentBooked } = require("./isAppointmentBooked");
-const { getNumVisits } = require('./get-visitcount')
+const { isTelehealthEligible } = require("./isTelehealthEligible.js");
+const { getNumVisits } = require('./get-visitcount');
 const {  getPatientInfo, updatePatientMedicare, updatePatientPension, updatePatientDVA, updatePatientContacts, updatePatientAddress, 
   updatePatientEmail, setEmergencyContact, setNextOfKin, updateHealthFund, updatePatient } = require('./patient-info')
 const { localDate } = require("./util")
@@ -136,6 +137,17 @@ app.post('/cancel-appointment', async (req, res) => {
   try {
     const { aptID } = req.body
     const result = await cancelAppointment(aptID);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: err});
+  }
+});
+
+app.post('/is-tele-eligible', async (req, res) => {
+  try {
+    const { patientID } = req.body
+    const result = await isTelehealthEligible(patientID);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);

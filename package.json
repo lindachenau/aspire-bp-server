@@ -5,6 +5,7 @@
     "graphql": "^16.3.0",
     "graphql-tag": "^2.12.6",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.41",
     "mssql": "^6.3.1"
   }
 }

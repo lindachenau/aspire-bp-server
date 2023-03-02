@@ -20,6 +20,8 @@ const bpConfig = {
 
 const newPatientAptType = 4
 const longApptType = 2
+const telephoneConsultation = 30
+const telehealthCconsultation = 29
 const apptRecordBooked = 1
 const apptStatusBooked = 1
 const apptStatusDNA = 10
