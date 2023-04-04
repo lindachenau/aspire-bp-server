@@ -2,8 +2,8 @@ const moment = require('moment')
 const sql = require('mssql');
 const { runStoredProcedure, aptTimeString } = require("./util")
 const { bpConfig } = require("./bp-config");
-//Every 5th slot will be dropped for clinic booking
-const RESERVED_FOR_CLINIC_BOOKING = 5
+//Every 50th slot will be dropped for clinic booking
+const RESERVED_FOR_CLINIC_BOOKING = 50
 
 const getFreeApts = (pool, secondsFromMidNight, startDate, numDays, userList) => {
   let allSlots = []
