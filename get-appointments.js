@@ -39,12 +39,11 @@ const getFreeApts = (pool, secondsFromMidNight, startDate, numDays, userList) =>
             })
           })
         } else {
-          result.recordset.forEach(item => {
-            if ((slotNum % RESERVED_FOR_CLINIC_BOOKING) > 0)
-            slots.push({
+          slots = result.recordset.map(item => {
+            return {
               start: aptTimeString(item.AppointmentTime),
               duration: Math.floor(item.AppointmentLength / 60)
-            })
+            }
           })
         }
         oneDay = {
