@@ -29,7 +29,9 @@ const apptStatusDNA = 10
 const userIDs = {
   "1" : "Vaccination Clinic",
   "2000000570": "Kai Yu",
-  "5" : "Lina Wee"
+  "5" : "Lina Wee",
+  "16" : "Alecia Chen",
+  "17" : "Mat Kong"
 }
 
 module.exports = {
