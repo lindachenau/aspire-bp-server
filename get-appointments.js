@@ -2,8 +2,6 @@ const moment = require('moment')
 const sql = require('mssql');
 const { runStoredProcedure, aptTimeString } = require("./util")
 const { bpConfig } = require("./bp-config");
-//Every 50th slot will be dropped for clinic booking
-const RESERVED_FOR_CLINIC_BOOKING = 50
 
 const getFreeApts = (pool, secondsFromMidNight, startDate, numDays, userList) => {
   let allSlots = []
@@ -31,16 +29,14 @@ const getFreeApts = (pool, secondsFromMidNight, startDate, numDays, userList) =>
 
         const result = await runStoredProcedure(pool, 'BP_GetFreeAppointments', params)
         let slots = []
-        let slotNum = 0
         if (curTick === todayMidNight) {
-          // Filter out obsolete slots and slots reserved for clinic booking
+          // Filter out obsolete slots
           result.recordset.forEach(item => {
-            if (item.AppointmentTime >= secondsFromMidNight && (slotNum % RESERVED_FOR_CLINIC_BOOKING) > 0)
+            if (item.AppointmentTime >= secondsFromMidNight)
             slots.push({
               start: aptTimeString(item.AppointmentTime),
               duration: Math.floor(item.AppointmentLength / 60)
             })
-            slotNum = slotNum + 1
           })
         } else {
           result.recordset.forEach(item => {
@@ -49,7 +45,6 @@ const getFreeApts = (pool, secondsFromMidNight, startDate, numDays, userList) =>
               start: aptTimeString(item.AppointmentTime),
               duration: Math.floor(item.AppointmentLength / 60)
             })
-            slotNum = slotNum + 1
           })
         }
         oneDay = {
