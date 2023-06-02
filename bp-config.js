@@ -18,8 +18,12 @@ const bpConfig = {
   }
 }
 
+//Appt length based on appt type
 const newPatientAptType = 4
 const longApptType = 2
+const followupApptType = 110
+const initialApptType = 109
+
 const telephoneConsultation = 30
 const telehealthCconsultation = 29
 const apptRecordBooked = 1

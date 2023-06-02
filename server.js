@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const https = require('https');
-const { newPatientAptType, longApptType } = require("./bp-config")
+const { newPatientAptType, longApptType, followupApptType, initialApptType } = require("./bp-config")
 const { getAppointments } = require("./get-appointments");
 const { addAppointment } = require("./add-appointment");
 const { cancelAppointment } = require("./cancel-appointment");
@@ -111,11 +111,18 @@ app.post('/add-appointment', async (req, res) => {
         console.log("The patient has failed to attend appointments 3 times")
         res.status(200).json(-2);
       } else {
-        const doubleLength = aptType == newPatientAptType || aptType == longApptType
+
+        let slotMultiple = 1
+
+        if (aptType == initialApptType)
+          slotMultiple = 3
+        else if (aptType == newPatientAptType || aptType == longApptType || aptType == followupApptType)
+          slotMultiple = 2
+
         let booked2 = false
-        if (doubleLength) {
-          //Check the 2nd slot is still free
-          booked2 = await isLongAppointmentBooked(practitionerID, aptDate, aptTime, aptDuration)
+        if (slotMultiple > 1) {
+          //Check the 2nd & 3rd slot is still free
+          booked2 = await isLongAppointmentBooked(practitionerID, aptDate, aptTime, aptDuration, slotMultiple)
         }
 
         if (booked2) {
