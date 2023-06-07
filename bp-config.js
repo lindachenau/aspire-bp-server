@@ -34,7 +34,8 @@ const userIDs = {
   "1" : "Vaccination Clinic",
   "2000000570": "Kai Yu",
   "5" : "Lina Wee",
-  "17" : "Matthew Kong"
+  "17" : "Matthew Kong",
+  "18" : "Catherine Lok"
 }
 
 module.exports = {
