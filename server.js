@@ -285,8 +285,8 @@ app.post('/appointment-status', async (req, res) => {
 
 app.post('/confirm-appointment', async (req, res) => {
   try {
-    const { id } = req.body
-    const result = await confirmAppointment(id);
+    const { aptID } = req.body
+    const result = await confirmAppointment(aptID);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
