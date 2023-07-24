@@ -22,8 +22,11 @@ const addAppointment = async (aptDate, aptTime, aptDuration, aptType, practition
   const pool = await sql.connect(bpConfig)
   const result = await runStoredProcedure(pool, 'BP_AddAppointmentEx', params)
 
-  // Appointments.RecordID
-  return result.returnValue
+  // Appointments.RecordID if patient is valid. Deleted patient returns null
+  if (result?.returnValue)
+    return result.returnValue
+  else
+    return null
 }
 
 //39 Test21 Patient
