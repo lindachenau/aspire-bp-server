@@ -104,10 +104,12 @@ app.post('/add-appointment', async (req, res) => {
         return (slot <= today) ? apt : null
       })            
 
-      if (booked.length > 0) {
-        console.log("The patient has booked an appointment on the requested date.")
-        res.status(200).json(-1);
-      } else if (history.length >= 3) {
+      // Disable booking twice checking because patient could be booking GP and Allied Health appointments on the same day
+      // if (booked.length > 0) {
+      //   console.log("The patient has booked an appointment on the requested date.")
+      //   res.status(200).json(-1);
+      // } else if (history.length >= 3) {
+      if (history.length >= 3) {        
         console.log("The patient has failed to attend appointments 3 times")
         res.status(200).json(-2);
       } else {
