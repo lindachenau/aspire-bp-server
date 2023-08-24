@@ -35,7 +35,8 @@ const userIDs = {
   "2000000570": "Kai Yu",
   "5" : "Lina Wee",
   "17" : "Matthew Kong",
-  "18" : "Catherine Lok"
+  "18" : "Catherine Lok",
+  "22" : "Emilia Tiainen"
 }
 
 module.exports = {
