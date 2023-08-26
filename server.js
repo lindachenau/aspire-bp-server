@@ -19,7 +19,8 @@ const { localDate } = require("./util")
 const { appointmentStatus } = require('./appointment-status')
 const { confirmAppointment } = require('./appointment-attendance')
 const { getAppointmentsOnDate } = require('./get-appointments-on-date')
-const { contactByPhone }= require('./contact-lookup')
+const { contactByPhone } = require('./contact-lookup')
+const { getUserBookedApts } = require('./get-userbookedapts')
 
 const app = express();
 app.use(express.json())
@@ -359,6 +360,18 @@ app.post('/update-patient', async (req, res) => {
     const result = await updatePatient(patientID, titleCode, firstname, surname, dob, sexCode, address1, city, postcode, 
       email, homePhone, workPhone, mobilePhone, medicareNo, medicareLineNo, medicareExpiry, 
       pensionCode, pensionNo, pensionExpiry, dVACode, dVANo, ethnicCode);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: err});
+  }
+});
+
+app.post('/user-appointments-ondate', async (req, res) => {
+  try {
+    const { aptDate } = req.body
+    const { userID } = req.body
+    const result = await getUserBookedApts(userID, aptDate);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
