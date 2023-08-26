@@ -12,6 +12,7 @@ const getUserBookedApts = async (userID, aptDate) => {
   const bookedSlots = result.recordset.map(item => {
     return {
       recordID: item.RecordID,
+      patientName: `${item.Firstname.trim()} ${item.Surname.trim()}`,
       patientID: item.InternalID[0],
       time: item.AppointmentTime,
       timeString: aptTimeString(item.AppointmentTime),
