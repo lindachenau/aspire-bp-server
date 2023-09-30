@@ -1,65 +1,23 @@
-const axios = require('axios');
-const dotenv = require('dotenv');
-dotenv.config();
-const gql = require('graphql-tag');
-const graphql = require('graphql');
-const { print } = graphql;
-
-const contactByPhoneGql = gql`
-query ContactByPhone(
-  $phone: String
-  $sortDirection: ModelSortDirection
-  $filter: ModelContactFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  contactByPhone(
-    phone: $phone
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      firstName
-      lastName
-      phone
-      email
-      companyName
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-`;
+const sql = require('mssql');
+const { bpConfig } = require("./bp-config")
 
 const contactByPhone = async (phone) => {
   try {
-    const graphqlData = await axios({
-      url: process.env.API_URL,
-      method: 'post',
-      headers: {
-        'x-api-key': process.env.API_KEY
-      },
-      data: {
-        query: print(contactByPhoneGql),
-        variables: {
-          phone: phone
-        }
-      }
-    });
-    const contacts = graphqlData.data.data.contactByPhone.items
-    if (contacts.length > 0)
-      return contacts[0]
+    const pool = await sql.connect(bpConfig)
+
+    const queryStr = `SELECT INTERNALID, FIRSTNAME, PREFERREDNAME, SURNAME, CITY FROM Patients WHERE MOBILEPHONE LIKE \'${phone}\' AND RECORDSTATUS = 1`
+    const result = await pool.request()
+      .query(queryStr)
+    
+    if (result.recordset.length > 0)
+      return result.recordset[0]
     else
       return {}
 
   } catch (err) {
-    console.log('error contactByPhone : ', err);
-  } 
-}
+    console.log(err)
+  }
+}      
 
 module.exports = {
   contactByPhone
