@@ -1,6 +1,6 @@
 const sql = require('mssql');
 const moment = require('moment')
-const { runStoredProcedure, aptTimeString } = require("./util")
+const { aptTimeString } = require("./util")
 const { bpConfig, apptRecordBooked, apptStatusBooked, apptStatusDNA, userIDs } = require("./bp-config")
 
 const getPatientAppointments = async (patientID) => {
