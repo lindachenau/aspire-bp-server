@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const { runStoredProcedure } = require("./util")
+const { runStoredProcedure, aptTimeString } = require("./util")
 const { bpConfig } = require("./bp-config")
 const moment = require('moment')
 
