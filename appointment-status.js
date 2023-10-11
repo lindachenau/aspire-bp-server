@@ -28,10 +28,10 @@ const appointmentStatus = async (aptID) => {
   return apt
 }
 
-// (async () => {
-//   const result = await appointmentStatus(79)
-//   console.log(result)
-// })()
+(async () => {
+  const result = await appointmentStatus(36455)
+  console.log(result)
+})()
 
 module.exports = {
   appointmentStatus
