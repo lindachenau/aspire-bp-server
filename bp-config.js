@@ -34,6 +34,8 @@ const userIDs = {
   "1" : "Vaccination Clinic",
   "2000000570": "Kai Yu",
   "5" : "Lina Wee",
+  "43" : "Adrian Wan",
+  "44" : "Yiping Zeng",
   "17" : "Matthew Kong",
   "18" : "Catherine Lok",
   "22" : "Emilia Tiainen"
