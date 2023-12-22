@@ -37,7 +37,7 @@ const userIDs = {
   "43" : "Adrian Wan",
   "44" : "Yiping Zeng",
   "17" : "Matthew Kong",
-  "18" : "Catherine Lok",
+  "32" : "Kelly Yu",
   "22" : "Emilia Tiainen"
 }
 
