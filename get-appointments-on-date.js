@@ -1,7 +1,7 @@
 const sql = require('mssql');
 const moment = require('moment')
 const { aptTimeString } = require("./util")
-const { bpConfig, userIDs } = require("./bp-config")
+const { bpConfig, userAptTypes } = require("./bp-config")
 
 const getAppointmentsOnDate = async (date) => {
   try {
@@ -14,7 +14,7 @@ const getAppointmentsOnDate = async (date) => {
       return {
         aptID: item.RECORDID,
         status: item.RECORDSTATUS,
-        provider: userIDs[item.USERID],
+        provider: userAptTypes[item.USERID],
         aptType: item.APPOINTMENTTYPE,
         aptDate: moment(item.APPOINTMENTDATE).format("YYYY-MM-DD"),
         aptTime: aptTimeString(item.APPOINTMENTTIME),

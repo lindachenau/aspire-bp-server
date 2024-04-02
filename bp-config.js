@@ -41,6 +41,17 @@ const userIDs = {
   "22" : "Emilia Tiainen"
 }
 
+const userAptTypes = {
+  "1" : "Vaccination",
+  "2000000570": "GP",
+  "5" : "GP",
+  "43" : "GP",
+  "53" : "GP",
+  "17" : "Physio",
+  "32" : "Dietitian",
+  "22" : "Psychologist"
+}
+
 module.exports = {
   bpConfig,
   newPatientAptType,
@@ -52,5 +63,6 @@ module.exports = {
   apptRecordBooked,
   apptStatusBooked,
   apptStatusDNA,
-  userIDs
+  userIDs,
+  userAptTypes
 }
