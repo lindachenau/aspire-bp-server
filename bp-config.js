@@ -36,6 +36,7 @@ const userIDs = {
   "5" : "Lina Wee",
   "43" : "Adrian Wan",
   "53" : "Lisa Liu",
+  "59" : "Feng Li",
   "17" : "Matthew Kong",
   "32" : "Kelly Yu",
   "22" : "Emilia Tiainen"
@@ -47,6 +48,7 @@ const userAptTypes = {
   "5" : "GP",
   "43" : "GP",
   "53" : "GP",
+  "59" : "GP",
   "17" : "Physio",
   "32" : "Dietitian",
   "22" : "Psychologist"
