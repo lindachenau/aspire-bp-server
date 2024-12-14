@@ -51,7 +51,8 @@ const userAptTypes = {
   "59" : "GP",
   "17" : "Physio",
   "32" : "Dietitian",
-  "22" : "Psychologist"
+  "22" : "Psychologist",
+  "73" : "General Surgeon"
 }
 
 module.exports = {
